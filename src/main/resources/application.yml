@@ -4,4 +4,4 @@ server:
 kafka:
   producer:
     bootstrap: localhost:9092
-    topic: message
+    topic: all.messages
