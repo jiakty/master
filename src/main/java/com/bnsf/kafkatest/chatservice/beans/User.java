@@ -3,7 +3,6 @@ package com.bnsf.kafkatest.chatservice.beans;
 
 public class User {
 	private String username;
-	private String password;
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

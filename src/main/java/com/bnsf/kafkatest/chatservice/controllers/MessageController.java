@@ -3,6 +3,7 @@ package com.bnsf.kafkatest.chatservice.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bnsf.kafkatest.chatservice.Response;
@@ -17,10 +18,7 @@ public class MessageController {
 	
 	@PostMapping("/send")
 	public Response sendToAll(Message message) {
-		User u = new User();
-		u.setUsername("Tom");
-		message.setUser(u);
-		message.setMessage("hello");
+		
 		System.out.println(message);
 		return this.ms.sendMessage(message);
 	}

@@ -1,7 +1,5 @@
 package com.bnsf.kafkatest.chatservice.service;
 
-import java.util.concurrent.ExecutionException;
-
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bnsf.kafkatest.chatservice.Response;
 import com.bnsf.kafkatest.chatservice.beans.Message;
-import com.bnsf.kafkatest.chatservice.beans.User;
+import com.bnsf.kafkatest.chatservice.config.KafkaProducerProperties;
 
 @Service
 public class MessageService {
@@ -18,13 +16,14 @@ public class MessageService {
     @Autowired
     private KafkaTemplate<String, Message> messageKafkaTemplate;
 
-    //@Autowired
-   // private KafkaProducerProperties kafkaProducerProperties;
+    @Autowired
+    private KafkaProducerProperties kafkaProducerProperties;
     
     public boolean dispatch(Message message) {
         try {
-            SendResult<String, Message> sendResult = messageKafkaTemplate.sendDefault(message.getUser().getUsername(), message).get();
-            //RecordMetadata recordMetadata = sendResult.getRecordMetadata();
+            SendResult<String, Message> sendResult = messageKafkaTemplate.sendDefault(message.getUser(), message).get();
+            RecordMetadata recordMetadata = sendResult.getRecordMetadata();
+            System.out.println("offset: "+recordMetadata.offset() +", partition: "+ recordMetadata.partition()+", topic:"+recordMetadata.topic()+"    "+sendResult+"       "+recordMetadata);
             return true;
         } catch (Exception e) {
             throw new RuntimeException(e);
