@@ -15,9 +15,6 @@ public class MessageService {
 
     @Autowired
     private KafkaTemplate<String, Message> messageKafkaTemplate;
-
-    @Autowired
-    private KafkaProducerProperties kafkaProducerProperties;
     
     public boolean dispatch(Message message) {
         try {
@@ -39,5 +36,6 @@ public class MessageService {
     		return new Response(true,"Success");
     	else
     		return new Response(false);
+    	
     }
 }
